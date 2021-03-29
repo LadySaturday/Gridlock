@@ -73,4 +73,10 @@ public class PlayerController : MonoBehaviour
         }
             
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Finish")
+            Debug.Log("WIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN");
+    }
 }
