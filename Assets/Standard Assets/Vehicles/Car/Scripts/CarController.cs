@@ -55,10 +55,23 @@ namespace UnityStandardAssets.Vehicles.Car
         public float MaxSpeed{get { return m_Topspeed; }}
         public float Revs { get; private set; }
         public float AccelInput { get; private set; }
+        public float speedBooster = 20;
+        private GameObject colliders;
+        private RigidbodyConstraints constraints;
+        private MeshRenderer meshRenderer;
+        public float invisibleTime = 6;
 
+        public Material materialVisible;
+        public Material materialInvisible;
+        private GameObject stealthParticles;
         // Use this for initialization
         private void Start()
         {
+            meshRenderer = GameObject.FindGameObjectWithTag("body").GetComponent<MeshRenderer>();
+            constraints=GetComponent<Rigidbody>().constraints;
+            colliders = transform.GetChild(0).gameObject;
+            stealthParticles = GameObject.FindGameObjectWithTag("stealthParticles");
+            stealthParticles.SetActive(false);
             m_WheelMeshLocalRotations = new Quaternion[4];
             for (int i = 0; i < 4; i++)
             {
@@ -172,7 +185,31 @@ namespace UnityStandardAssets.Vehicles.Car
             TractionControl();
         }
 
+        public void speedBoost()
+        {
+            //Debug.Log("SPEED BOOST");
+            m_Rigidbody.velocity += (transform.forward) * speedBooster;
+        }
 
+        public void invisible()
+        {
+            //Debug.Log("Invisible");
+            constraints = RigidbodyConstraints.FreezePositionY;
+            colliders.SetActive(false);
+            meshRenderer.material = materialInvisible;
+            stealthParticles.SetActive(true);
+            Invoke("resetInvisible", invisibleTime);
+        }
+
+        private void resetInvisible()
+        {
+            //Debug.Log("Visible");
+            colliders.SetActive(true);
+            constraints = RigidbodyConstraints.None;
+            stealthParticles.SetActive(false);
+            meshRenderer.material = materialVisible;
+
+        }
         private void CapSpeed()
         {
             float speed = m_Rigidbody.velocity.magnitude;

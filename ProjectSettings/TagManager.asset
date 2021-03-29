@@ -15,6 +15,10 @@ TagManager:
   - damageable
   - healthTxt
   - health
+  - speed
+  - invisible
+  - body
+  - stealthParticles
   layers:
   - Default
   - TransparentFX
