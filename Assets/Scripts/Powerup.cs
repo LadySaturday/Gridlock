@@ -5,12 +5,13 @@ using UnityStandardAssets.Vehicles.Car;
 
 public class Powerup : MonoBehaviour
 {
-    private CarController carController;
+    public CarController carController;
+    public PlayerController playerController;
     public GameObject particles;
     // Start is called before the first frame update
     void Start()
     {
-        carController = GameObject.FindGameObjectWithTag("Player").GetComponent<CarController>();
+        //carController = GameObject.FindGameObjectWithTag("Player").GetComponent<CarController>();
     }
 
     // Update is called once per frame
@@ -33,6 +34,9 @@ public class Powerup : MonoBehaviour
                 case "invisible":
                     //car can go through objects
                     carController.invisible();
+                    break;
+                case "heart":
+                    playerController.gainHealth();
                     break;
                 default://nothin
                     break;

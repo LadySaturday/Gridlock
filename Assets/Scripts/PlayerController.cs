@@ -60,6 +60,17 @@ public class PlayerController : MonoBehaviour
         canTakeDamage = true;
     }
 
+    public void gainHealth()
+    {
+        if (health < 10)
+        {
+            health++;
+            setupHealth();
+        }
+            
+
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "damageable")
