@@ -20,6 +20,9 @@ TagManager:
   - body
   - stealthParticles
   - heart
+  - boss
+  - wayPoint
+  - path
   layers:
   - Default
   - TransparentFX
