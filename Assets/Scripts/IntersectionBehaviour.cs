@@ -10,13 +10,14 @@ public class IntersectionBehaviour : MonoBehaviour
     /// 1st in, 1st out )queue)
     /// make path decision and go
     /// </summary>
-    Queue<AICarBehaviour> carsInIntersection;
-
+    Queue<AICarBehaviour> carsInIntersection=new Queue<AICarBehaviour>();
+    //Queue<GameObject> carsInIntersection=new Queue<GameObject>();
+    private float decisionTime = 5;
     public GameObject[] paths;
     // Start is called before the first frame update
     void Start()
     {
-        
+        InvokeRepeating("nextCarGo", decisionTime,decisionTime);
     }
 
     // Update is called once per frame
@@ -27,18 +28,35 @@ public class IntersectionBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
-        AICarBehaviour car = other.GetComponent<AICarBehaviour>();
-        if (car != null)
+        if (other.gameObject.tag == "damageable")//will change later
         {
-            car.stateMachine.TransitionTo("Stop");
-            Debug.Log("Making new path");
-            car.currentPath = paths[Random.Range(0, paths.Length)];//choose a new path for the car
-            car.UpdateCurrentPath();
+            AICarBehaviour car = other.gameObject.GetComponent<AICarBehaviour>();
+            if (car != null)
+            {
+;               carsInIntersection.Enqueue(car);
+                car.stateMachine.TransitionTo("Stop");
+                car.currentPath = paths[Random.Range(0, paths.Length)];//choose a new path for the car
+               // car.UpdateCurrentPath();
+
+
+            }
         }
         
-        //carsInIntersection.Enqueue(car);
+        
+        
            //next step is to wait, start movement of the car, and dequeue
+    }
+
+
+    //every x seconds, a car can go
+    
+    void nextCarGo()
+    {
+        if (carsInIntersection != null && carsInIntersection.Count>0)
+        {
+            carsInIntersection.Peek().stateMachine.TransitionTo("Go");
+            carsInIntersection.Dequeue();
+        }
     }
     
 }

@@ -19,7 +19,6 @@ public class AICarBehaviour : MonoBehaviour
     /// Stop: car is stopped, making decision for turning until car can go
     /// </summary>
     /// 
-    private GameObject [] waypointsGO;
     private Transform[] waypoints;
 
 
@@ -47,7 +46,7 @@ public class AICarBehaviour : MonoBehaviour
             OnEnter = () =>
             {
                 UpdateCurrentPath();
-
+                agent.isStopped = false;
             },
             OnStay = () =>
             {
@@ -71,15 +70,14 @@ public class AICarBehaviour : MonoBehaviour
         });
 
 
-        stateMachine.TransitionTo("Go");
-        //Debug.Log(currentWaypoint);
-        
+        stateMachine.TransitionTo("Go");   
 
     }
 
     //switch followed waypoints
     public void UpdateCurrentPath()
     {
+        Debug.Log("New path: " + currentPath.name);
         Array.Resize(ref waypoints, currentPath.transform.childCount);
         for (int i = 0; i < currentPath.transform.childCount; i++)
         {
@@ -87,34 +85,63 @@ public class AICarBehaviour : MonoBehaviour
         }
 
         agent.SetDestination(ClosestWaypointOnPath());
-        Debug.Log("New path: "+currentPath.name);
+        
+        
     }
    
 
     // Update is called once per frame
     void Update()
     {
-        updateTarget();
+        if (!agent.isStopped)
+            updateTarget();
+        else
+            agent.velocity = Vector3.zero;
     }
 
+    //returns, from the current path, the closest waypoint
     private Vector3 ClosestWaypointOnPath()
     {
+        
+        currentWaypoint = 0;
+        float minDIst = Vector3.Distance(this.transform.position, waypoints[currentWaypoint].position);
         //find closest waypoint on the current path
-        foreach (Transform waypoint in waypoints)
-        {
-            if (Vector3.Distance(transform.position, waypoint.position) < Vector3.Distance(transform.position, waypoints[currentWaypoint].position))
-                currentWaypoint++;
+        for(int i=0; i<waypoints.Length;i++)
+        { 
+            float checkDist = Vector3.Distance(this.transform.position, waypoints[i].position);
+            Debug.Log("now checking: " + checkDist +"against "+minDIst);
+            if (checkDist < minDIst)
+            {
+                Debug.Log(checkDist+" is less than "+minDIst);
+                var v = this.transform.position - waypoints[i].position;
+                //check if the transform is behind
+                if (Vector3.Dot(v, transform.forward) > 0)
+                {
+                    Debug.Log("DOT:" +Vector3.Dot(transform.forward,v));
+                    currentWaypoint = i;
+                    minDIst = checkDist;
+                }
+                
+                
+            }
+                
         }
+
+        Debug.Log(waypoints[currentWaypoint].name +" is "+minDIst);
+       
+
         return waypoints[currentWaypoint].position;
     }
 
+
+    //once the target is reached, a new target is set
     void updateTarget()
     {
         if(Vector3.Distance(transform.position, waypoints[currentWaypoint].position) <= agent.stoppingDistance)
         {
             //reached waypoint
             currentWaypoint++;
-            if (currentWaypoint > waypoints.Length - 1)
+            if (currentWaypoint > waypoints.Length - 1)//reset to 0
                 currentWaypoint = 0;
             agent.SetDestination(waypoints[currentWaypoint].position);
         }
