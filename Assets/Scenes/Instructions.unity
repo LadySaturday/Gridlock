@@ -259,19 +259,19 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Get to work before your boss!
+  m_Text: 'Get to work (find the pink building!) before your boss!
 
 
-    Avoid traffic or you''ll damage your
-    car. When that happens, look for RED health powerups!
+    Avoid traffic
+    or you''ll damage your car. When that happens, look for RED health powerups!
 
 
-    Need a speed boost?
-    Grab GREEN speed boosts!
+    Need
+    a speed boost? Grab GREEN speed boosts!
 
 
-    Traffic in the way? Find BLUE powerups to move
-    through cars!
+    Traffic in the way? Find BLUE powerups
+    to move through cars!
 
 
     WASD to move!'
