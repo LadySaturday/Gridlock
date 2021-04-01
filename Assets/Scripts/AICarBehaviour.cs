@@ -109,18 +109,17 @@ public class AICarBehaviour : MonoBehaviour
         for(int i=0; i<waypoints.Length;i++)
         { 
             float checkDist = Vector3.Distance(this.transform.position, waypoints[i].position);
-            Debug.Log("now checking: " + checkDist +"against "+minDIst);
             if (checkDist < minDIst)
             {
                 Debug.Log(checkDist+" is less than "+minDIst);
-                var v = this.transform.position - waypoints[i].position;
+               // var v = this.transform.position - waypoints[i].position;
                 //check if the transform is behind
-                if (Vector3.Dot(v, transform.forward) > 0)
-                {
-                    Debug.Log("DOT:" +Vector3.Dot(transform.forward,v));
+                //if (Vector3.Dot(v, transform.forward) > 0)
+               // {
+                //    Debug.Log("DOT:" +Vector3.Dot(transform.forward,v));
                     currentWaypoint = i;
                     minDIst = checkDist;
-                }
+               // }
                 
                 
             }
