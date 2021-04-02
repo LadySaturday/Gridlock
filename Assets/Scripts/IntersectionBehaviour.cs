@@ -54,7 +54,11 @@ public class IntersectionBehaviour : MonoBehaviour
     {
         if (carsInIntersection != null && carsInIntersection.Count>0)
         {
-            carsInIntersection.Peek().stateMachine.TransitionTo("Go");
+           carsInIntersection.Peek().stateMachine.TransitionTo("Go");
+           //foreach (AICarBehaviour car in carsInIntersection)
+            //{
+                //car.stateMachine.TransitionTo("Go");
+            //}
             carsInIntersection.Dequeue();
         }
     }
