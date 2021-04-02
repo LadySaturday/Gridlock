@@ -10,13 +10,16 @@ public class IntersectionBehaviour : MonoBehaviour
     /// 1st in, 1st out )queue)
     /// make path decision and go
     /// </summary>
-    Queue<AICarBehaviour> carsInIntersection=new Queue<AICarBehaviour>();
-    //Queue<GameObject> carsInIntersection=new Queue<GameObject>();
+    Queue<AICarBehaviour> carsWaiting=new Queue<AICarBehaviour>();
+    Queue<AICarBehaviour> carsInIntersection = new Queue<AICarBehaviour>();
+    //Queue<GameObject> carsWaiting=new Queue<GameObject>();
     private float decisionTime = 5;
     public GameObject[] paths;
     // Start is called before the first frame update
     void Start()
     {
+        carsInIntersection = transform.GetChild(0).GetComponent<IntersectionHolder>().carsInIntersection;
+        
         InvokeRepeating("nextCarGo", decisionTime,decisionTime);
     }
 
@@ -33,7 +36,7 @@ public class IntersectionBehaviour : MonoBehaviour
             AICarBehaviour car = other.gameObject.GetComponent<AICarBehaviour>();
             if (car != null)
             {
-;               carsInIntersection.Enqueue(car);
+;               carsWaiting.Enqueue(car);
                 car.stateMachine.TransitionTo("Stop");
                 car.currentPath = paths[Random.Range(0, paths.Length)];//choose a new path for the car
                // car.UpdateCurrentPath();
@@ -52,14 +55,24 @@ public class IntersectionBehaviour : MonoBehaviour
     
     void nextCarGo()
     {
-        if (carsInIntersection != null && carsInIntersection.Count>0)
+        if (carsWaiting != null && carsWaiting.Count>0)//is a car waiting?
         {
-           carsInIntersection.Peek().stateMachine.TransitionTo("Go");
-           //foreach (AICarBehaviour car in carsInIntersection)
-            //{
+
+            if (carsInIntersection.Count < 1 )//no cars in the intersection
+            {
+                //Debug.Log(carsInIntersection.Peek().gameObject.tag);
+                carsWaiting.Peek().stateMachine.TransitionTo("Go");
+                //foreach (AICarBehaviour car in carsWaiting)
+                //{
                 //car.stateMachine.TransitionTo("Go");
-            //}
-            carsInIntersection.Dequeue();
+                //}
+                carsWaiting.Dequeue();
+            }/*
+            else
+            {
+                Debug.Log("THeres a car in the intersection");
+            }*/
+           
         }
     }
     

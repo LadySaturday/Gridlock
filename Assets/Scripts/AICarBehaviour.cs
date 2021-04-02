@@ -129,14 +129,20 @@ public class AICarBehaviour : MonoBehaviour
             float checkDist = Vector3.Distance(this.transform.position, waypoints[i].position);
             if (checkDist < minDIst)
             {
-               // var v = this.transform.position - waypoints[i].position;
+                 var v =   waypoints[i].position - this.transform.position;
                 //check if the transform is behind
-                //if (Vector3.Dot(v, transform.forward) > 0)
-               // {
-                //    Debug.Log("DOT:" +Vector3.Dot(transform.forward,v));
+                if (Vector3.Dot(v, this.transform.forward) > 0)
+                {
+                   // Debug.Log("DOT:" +Vector3.Dot(transform.forward,v));
                     currentWaypoint = i;
                     minDIst = checkDist;
-               // }
+                }
+                else
+                {
+                    currentWaypoint = i + 1;
+                    if (currentWaypoint > waypoints.Length - 1)//reset to 0
+                        currentWaypoint = 0;
+                }
                 
                 
             }
@@ -182,27 +188,25 @@ public class AICarBehaviour : MonoBehaviour
 
                 if (otherCar.stateMachine.CurrentState == otherCar.stateMachine.GetState("Go"))
                 {
-                    Debug.Log("They are going");
+                   // Debug.Log("They are going");
                     if (this.stateMachine.CurrentState != this.stateMachine.GetState("Go"))
                     {
                         
                         //canRaycast = false;
-                        Invoke("CanRaycast", 0.75f);//this is a terrible solution. 
-                                                //This causes issues because there is no obstacle detection for a full second. 
-                                                //find another solution
+                        Invoke("CanRaycast", 1f);
                     }
                         
                 }
-                    
-
-                //If the two vehicles are getting close, slow down their speed
-                /*
-                else if (hitDist < slowDownDist)
+                else
                 {
-                    acc = .5f;
-                    brake = 0f;
-                    //wheelDrive.maxSpeed = Mathf.Max(wheelDrive.maxSpeed / 1.5f, wheelDrive.minSpeed);
-                }*/
+                    this.stateMachine.TransitionTo("Stop");
+                }
+                    
+                
+                 if (hitDist < slowDownDist)
+                {
+                    agent.speed = maxSpeed * 0.5f;
+                }
             }
 
             ///////////////////////////////////////////////////////////////////
@@ -232,7 +236,7 @@ public class AICarBehaviour : MonoBehaviour
     {
         //canRaycast = true;
         this.stateMachine.TransitionTo("Go");
-        Debug.Log("Going");
+        //Debug.Log("Going");
     }
 
     GameObject GetDetectedObstacles(out float _hitDist)
