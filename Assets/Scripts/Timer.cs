@@ -15,7 +15,7 @@ public class Timer : MonoBehaviour
     void Update()
     {
         timeLeft -= Time.deltaTime;
-        startText.text = (timeLeft).ToString("0")+": seconds to get to work!";
+        startText.text = (timeLeft).ToString("0")+"\n seconds to get to work!";
         if (timeLeft < 0)
         {
             SceneManager.LoadScene("Lost");
