@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -23,12 +24,6 @@ public class PlayerController : MonoBehaviour
         healthTxt = GameObject.FindGameObjectWithTag("health");
 
         setupHealth();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void setupHealth()
@@ -54,7 +49,7 @@ public class PlayerController : MonoBehaviour
         if (health > 1)
             setupHealth();
         else
-            Debug.Log("Game OVERRRRRRRRRRR");
+            SceneManager.LoadScene("Lost");
 
         yield return new WaitForSeconds(waitBetweenDamage);
         canTakeDamage = true;

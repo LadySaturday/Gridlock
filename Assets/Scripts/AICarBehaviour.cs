@@ -177,7 +177,7 @@ public class AICarBehaviour : MonoBehaviour
                 if (otherVehicle.speed < agent.speed && dotFront > .8f)
                 {
                     
-                    agent.speed = (otherVehicle.speed - 0.5f);
+                    agent.speed = (otherVehicle.speed - 0.25f);
                 }
 
                 //If the two vehicles are too close, and facing the same direction, brake the ego vehicle

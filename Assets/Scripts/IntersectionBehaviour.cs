@@ -13,7 +13,7 @@ public class IntersectionBehaviour : MonoBehaviour
     Queue<AICarBehaviour> carsWaiting=new Queue<AICarBehaviour>();
     Queue<AICarBehaviour> carsInIntersection = new Queue<AICarBehaviour>();
     //Queue<GameObject> carsWaiting=new Queue<GameObject>();
-    private float decisionTime = 5;
+    private float decisionTime = 2;
     public GameObject[] paths;
     // Start is called before the first frame update
     void Start()
