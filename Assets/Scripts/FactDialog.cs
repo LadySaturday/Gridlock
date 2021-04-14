@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// show player fact dialogs
+/// </summary>
 public class FactDialog : MonoBehaviour
 {
     public string fact;

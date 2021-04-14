@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// Controls player health, powerups
+/// Controls player health, powerups abilities
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
         setupHealth();
     }
 
+    //communicate health to player via UI
     private void setupHealth()
     {
         if(heartIcons!=null&&heartIcons.Length>0)
@@ -43,6 +44,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //lower health
     private IEnumerator takeDamage(int damage)
     {
         health -= damage;
@@ -55,6 +57,7 @@ public class PlayerController : MonoBehaviour
         canTakeDamage = true;
     }
 
+    //increase health
     public void gainHealth()
     {
         if (health < 10)
@@ -79,10 +82,5 @@ public class PlayerController : MonoBehaviour
         }
             
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Finish")
-            Debug.Log("WIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN");
-    }
+    
 }

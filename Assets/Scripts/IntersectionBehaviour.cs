@@ -23,11 +23,6 @@ public class IntersectionBehaviour : MonoBehaviour
         InvokeRepeating("nextCarGo", decisionTime,decisionTime);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -45,14 +40,10 @@ public class IntersectionBehaviour : MonoBehaviour
             }
         }
         
-        
-        
-           //next step is to wait, start movement of the car, and dequeue
     }
 
 
-    //every x seconds, a car can go
-    
+    //every x seconds, a car can go    
     void nextCarGo()
     {
         if (carsWaiting != null && carsWaiting.Count>0)//is a car waiting?

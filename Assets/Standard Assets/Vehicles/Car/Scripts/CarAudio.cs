@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 using Random = UnityEngine.Random;
 
 namespace UnityStandardAssets.Vehicles.Car
@@ -29,6 +30,7 @@ namespace UnityStandardAssets.Vehicles.Car
             FourChannel // four Channel audio
         }
 
+        public AudioMixer mixer;
         public EngineAudioOptions engineSoundStyle = EngineAudioOptions.FourChannel;// Set the default audio options to be four channel
         public AudioClip lowAccelClip;                                              // Audio clip for low acceleration
         public AudioClip lowDecelClip;                                              // Audio clip for low deceleration
@@ -165,6 +167,7 @@ namespace UnityStandardAssets.Vehicles.Car
             source.volume = 0;
             source.loop = true;
 
+            source.outputAudioMixerGroup = mixer.FindMatchingGroups("SoundEffects")[0];
             // start the clip from a random point
             source.time = Random.Range(0f, clip.length);
             source.Play();

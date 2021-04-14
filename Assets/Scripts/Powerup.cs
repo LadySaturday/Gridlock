@@ -2,29 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Vehicles.Car;
-
+/// <summary>
+/// Spawn particles and act prooperly as a powerup (speed, health, invis)
+/// </summary>
 public class Powerup : MonoBehaviour
 {
+    
     public CarController carController;
     public PlayerController playerController;
     public GameObject particles;
-    // Start is called before the first frame update
-    void Start()
-    {
-        //carController = GameObject.FindGameObjectWithTag("Player").GetComponent<CarController>();
-    }
+    private AudioSource audio;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        audio = transform.parent.GetComponent<AudioSource>();
     }
-
     private void OnTriggerEnter(Collider other)
     {
        
         if (other.gameObject.tag == "Player")
         {
+            audio.Play();
             switch (gameObject.tag)
             {
                 case "speed":

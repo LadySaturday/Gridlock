@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-//quicky hacky thing to prep for playtest
+//countdown to the end of the level
 public class Timer : MonoBehaviour
 {
 

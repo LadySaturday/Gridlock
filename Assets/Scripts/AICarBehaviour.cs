@@ -8,15 +8,9 @@ public class AICarBehaviour : MonoBehaviour
 {
     /// <summary>
     /// logic:
-    /// 
-    /// 
-    /// at intersection, car makes decision. Stay on this path or change paths?
-    /// 
-    /// States should be: Go, Stop, Slow
-    /// 
-    /// Go: car follows path via waypoint system
-    /// Slow: car is slowing down for the car in front of it or to turn
-    /// Stop: car is stopped, making decision for turning until car can go
+    /// Cars detect cars ahead of them and enter states accordningly:
+    /// Stop: stop movement unitl it's safe
+    /// GO: proceed to next waypoint
     /// </summary>
     /// 
     private Transform[] waypoints;
@@ -38,6 +32,7 @@ public class AICarBehaviour : MonoBehaviour
     public float maxSpeed =10;
     public StateMachine stateMachine;
     private bool canRaycast=true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,10 +40,7 @@ public class AICarBehaviour : MonoBehaviour
         paths = GameObject.FindGameObjectsWithTag("path");
         agent = GetComponent<NavMeshAgent>();
 
-
-        
-
-
+        //create states
         stateMachine = new StateMachine();
         stateMachine.AddState(new StateMachine.State()
         {
@@ -85,8 +77,8 @@ public class AICarBehaviour : MonoBehaviour
         stateMachine.TransitionTo("Go");   
 
     }
-
-    //switch followed waypoints
+    
+    //change path/ followed waypoints to other available path
     public void UpdateCurrentPath()
     {
        // Debug.Log("New path: " + currentPath.name);
@@ -155,6 +147,7 @@ public class AICarBehaviour : MonoBehaviour
         return waypoints[currentWaypoint].position;
     }
 
+    //shoots rays to detect obstacles
     void raycast()
     {
         float hitDist;
@@ -173,10 +166,9 @@ public class AICarBehaviour : MonoBehaviour
                 //Check if it's front vehicle
                 float dotFront = Vector3.Dot(this.transform.forward, otherVehicle.transform.forward);
 
-                //If detected front vehicle max speed is lower than ego vehicle, then decrease ego vehicle max speed
+                //If detected front vehicle speed is lower, decrease max speed
                 if (otherVehicle.speed < agent.speed && dotFront > .8f)
-                {
-                    
+                {      
                     agent.speed = (otherVehicle.speed - 0.25f);
                 }
 
@@ -191,8 +183,7 @@ public class AICarBehaviour : MonoBehaviour
                    // Debug.Log("They are going");
                     if (this.stateMachine.CurrentState != this.stateMachine.GetState("Go"))
                     {
-                        
-                        //canRaycast = false;
+                       
                         Invoke("CanRaycast", 1f);
                     }
                         
@@ -209,26 +200,7 @@ public class AICarBehaviour : MonoBehaviour
                 }
             }
 
-            ///////////////////////////////////////////////////////////////////
-            // Generic obstacles
-            else
-            {
-                //Emergency brake if getting too close
-                /*
-                if (hitDist < emergencyBrakeThresh)
-                {
-                    acc = 0;
-                    brake = 1;
-                    wheelDrive.maxSpeed = Mathf.Max(wheelDrive.maxSpeed / 2f, wheelDrive.minSpeed);
-                }
-
-                //Otherwise if getting relatively close decrease speed
-                else if (hitDist < slowDownThresh)
-                {
-                    acc = .5f;
-                    brake = 0f;
-                }*/
-            }
+            
         }
     }
 
@@ -239,6 +211,7 @@ public class AICarBehaviour : MonoBehaviour
         //Debug.Log("Going");
     }
 
+    //figure out if the obstacle is noteable
     GameObject GetDetectedObstacles(out float _hitDist)
     {
         GameObject detectedObstacle = null;

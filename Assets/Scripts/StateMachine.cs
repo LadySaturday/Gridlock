@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Linq;
     
+//a cleaner way for state machine
 public class StateMachine {
     private Dictionary<string, State> States = new Dictionary<string, State>();
 
