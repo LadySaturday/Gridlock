@@ -197,7 +197,7 @@ namespace UnityStandardAssets.Vehicles.Car
         {
             //Debug.Log("SPEED BOOST");
             
-            m_Topspeed = 20;
+            m_Topspeed = 30;
         }
 
         public void invisible()
