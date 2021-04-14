@@ -188,8 +188,16 @@ namespace UnityStandardAssets.Vehicles.Car
         public void speedBoost()
         {
             //Debug.Log("SPEED BOOST");
-          //  MaxSpeed = speedBoost;
+            m_Topspeed = speedBooster;
             m_Rigidbody.velocity += (transform.forward) * speedBooster;
+            Invoke("speedBoostStop", 0.75f);
+        }
+
+        public void speedBoostStop()
+        {
+            //Debug.Log("SPEED BOOST");
+            
+            m_Topspeed = 20;
         }
 
         public void invisible()
