@@ -33,9 +33,12 @@ public class AICarBehaviour : MonoBehaviour
     public StateMachine stateMachine;
     private bool canRaycast=true;
 
+    private AudioSource audio;
+
     // Start is called before the first frame update
     void Start()
     {
+        audio = GetComponent<AudioSource>();
 
         paths = GameObject.FindGameObjectsWithTag("path");
         agent = GetComponent<NavMeshAgent>();
@@ -77,7 +80,12 @@ public class AICarBehaviour : MonoBehaviour
         stateMachine.TransitionTo("Go");   
 
     }
-    
+    //play audio on crash
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag=="Player")
+            audio.Play();
+    }
     //change path/ followed waypoints to other available path
     public void UpdateCurrentPath()
     {
