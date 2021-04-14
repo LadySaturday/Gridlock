@@ -5949,12 +5949,12 @@ MonoBehaviour:
   m_ReverseTorque: 500
   m_MaxHandbrakeTorque: 100000000
   m_Downforce: 100
-  m_SpeedType: 0
-  m_Topspeed: 150
+  m_SpeedType: 1
+  m_Topspeed: 30
   m_RevRangeBoundary: 1
   m_SlipLimit: 0.3
   m_BrakeTorque: 20000
-  speedBooster: 20
+  speedBooster: 100
   invisibleTime: 6
   materialVisible: {fileID: 2100000, guid: d425c5c4cb38fd44f95b13e9f94575c2, type: 2}
   materialInvisible: {fileID: 2100000, guid: 1b5c685d06e88874384092890b6b37be, type: 2}

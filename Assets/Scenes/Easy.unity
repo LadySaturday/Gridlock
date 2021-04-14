@@ -41602,21 +41602,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2248781535782598729, guid: ce0cab47d9abd6749997c64d7b70c378,
-        type: 3}
-      propertyPath: m_Topspeed
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 2248781535782598729, guid: ce0cab47d9abd6749997c64d7b70c378,
-        type: 3}
-      propertyPath: m_SpeedType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2248781535782598729, guid: ce0cab47d9abd6749997c64d7b70c378,
-        type: 3}
-      propertyPath: speedBooster
-      value: 100
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce0cab47d9abd6749997c64d7b70c378, type: 3}
 --- !u!1001 &3057164813198608231

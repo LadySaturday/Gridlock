@@ -7,6 +7,13 @@ public class options : MonoBehaviour
 {
     public AudioMixer mixer;
 
+    public void toggleFacts(bool factsOn)
+    {
+        if (factsOn)
+            PlayerPrefs.SetInt("facts", 1);
+        else
+            PlayerPrefs.SetInt("facts", 0);
+    }
 
     public void setMaster(float sliderValue)
     {
